@@ -9,10 +9,12 @@ rm -f $1/country_dist.html
 
 
 
-for file in $(find $1 -type f)
-do
-	echo "$(awk 'match($0, /[a-zA-Z0-9]{3} +[0-9]{1,2} [0-9]{2} [a-zA-Z0-9_\-\[\]]+ ([0-9\.]+)/, groups) {print groups[1]}' < $file)" >> $1/tmp_failed_country_data.txt
-done
+#for file in $(find $1 -type f)
+#do
+#	echo "$(awk 'match($0, /[a-zA-Z0-9]{3} +[0-9]{1,2} [0-9]{2} [a-zA-Z0-9_\-\[\]]+ ([0-9\.]+)/, groups) {print groups[1]}' < $file)" >> $1/tmp_failed_country_data.txt
+#done
+echo "$(awk 'match($0, /[a-zA-Z0-9]{3} +[0-9]{1,2} [0-9]{2} [a-zA-Z0-9_\-\[\]]+ ([0-9\.]+)/, groups) {print groups[1]}' < $1/failed_login_data.txt)" >> $1/tmp_failed_country_data.txt
+
 sort $1/tmp_failed_country_data.txt > $1/tmp_sorted_country_data.txt
 join $1/tmp_sorted_country_data.txt etc/country_IP_map.txt > $1/tmp_joined_country_data.txt
 
@@ -30,4 +32,3 @@ rm -f $1/tmp_country_ids.txt
 rm -f $1/tmp_sorted_country_ids.txt
 rm -f $1/tmp_country_amount_data.txt
 rm -f $1/tmp_data.txt
-
